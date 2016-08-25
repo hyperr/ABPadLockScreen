@@ -25,9 +25,11 @@
 #import "ABPinSelectionView.h"
 #import <AudioToolbox/AudioToolbox.h>
 
-#define lockScreenView ((ABPadLockScreenView *) [self view])
+//#define lockScreenView ((ABPadLockScreenView *) [self.views ])
 
 @interface ABPadLockScreenAbstractViewController ()
+
+@property (nonatomic, strong) ABPadLockScreenView *lockScreenView;
 
 - (void)setUpButtonMapping;
 - (void)buttonSelected:(UIButton *)sender;
@@ -63,6 +65,17 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        _currentPin = @"";
+        _complexPin = false;
+        _tapSoundEnabled = NO;
+        _errorVibrateEnabled = NO;
+    }
+    return self;
+}
+
 #pragma mark -
 #pragma mark - View Controller Lifecycele Methods
 - (void)viewDidLoad
@@ -79,11 +92,12 @@
         }
     }
     
-    self.view = [[ABPadLockScreenView alloc] initWithFrame:bounds complexPin:self.isComplexPin];
-    
-    [self setUpButtonMapping];
+    lockScreenView = [[ABPadLockScreenView alloc] initWithFrame:bounds complexPin:self.isComplexPin];
     [lockScreenView.deleteButton addTarget:self action:@selector(deleteButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
 	[lockScreenView.okButton addTarget:self action:@selector(okButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:lockScreenView];
+    [self setUpButtonMapping];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations

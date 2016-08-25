@@ -32,21 +32,25 @@
 @class ABPadLockScreenViewController;
 @protocol ABPadLockScreenViewControllerDelegate;
 
+
 @interface ABPadLockScreenViewController : ABPadLockScreenAbstractViewController
 
-- (instancetype)initWithDelegate:(id<ABPadLockScreenViewControllerDelegate>)delegate complexPin:(BOOL)complexPin;
-
-@property (nonatomic, weak, readonly) id<ABPadLockScreenViewControllerDelegate> lockScreenDelegate;
+@property (nonatomic, weak) id<ABPadLockScreenViewControllerDelegate> lockScreenDelegate;
 @property (nonatomic, assign, readonly) NSInteger totalAttempts;
 @property (nonatomic, assign, readonly) NSInteger remainingAttempts;
 
-- (void)setAllowedAttempts:(NSInteger)allowedAttempts;
 
+- (instancetype)initWithDelegate:(id<ABPadLockScreenViewControllerDelegate>)delegate complexPin:(BOOL)complexPin;
+
+
+- (void)setAllowedAttempts:(NSInteger)allowedAttempts;
+- (void)setDelegate:(id<ABPadLockScreenViewControllerDelegate>)delegate;
 - (void)setLockedOutText:(NSString *)title;
 - (void)setPluralAttemptsLeftText:(NSString *)title;
 - (void)setSingleAttemptLeftText:(NSString *)title;
 
 @end
+
 
 @protocol ABPadLockScreenViewControllerDelegate <NSObject>
 @required
@@ -71,7 +75,9 @@
  */
 - (void)unlockWasCancelledForPadLockScreenViewController:(ABPadLockScreenViewController *)padLockScreenViewController;
 
+
 @optional
+
 /**
  Called when the user has expired their attempts
  */

@@ -25,7 +25,7 @@
 #import "ABPinSelectionView.h"
 #import <AudioToolbox/AudioToolbox.h>
 
-#define lockScreenView ((ABPadLockScreenView *) [self view])
+//#define lockScreenView ((ABPadLockScreenView *) [self view])
 
 @interface ABPadLockScreenViewController ()
 
@@ -35,9 +35,9 @@
 
 - (BOOL)isPinValid:(NSString *)pin;
 
+- (void)lockScreen;
 - (void)unlockScreen;
 - (void)processFailure;
-- (void)lockScreen;
 
 @end
 
@@ -65,6 +65,9 @@
 {
     _totalAttempts = 0;
     _remainingAttempts = allowedAttempts;
+}
+- (void)setDelegate:(id<ABPadLockScreenViewControllerDelegate>)delegate {
+    _lockScreenDelegate = delegate;
 }
 
 #pragma mark -

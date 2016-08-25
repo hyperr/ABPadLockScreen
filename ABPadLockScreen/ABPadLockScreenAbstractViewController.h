@@ -28,10 +28,12 @@
 
 @class ABPadLockScreenView;
 
+
 @interface ABPadLockScreenAbstractViewController : UIViewController
 {
 	ABPadLockScreenView* lockScreenView;
 }
+
 
 @property (nonatomic, strong) NSString *currentPin;
 @property (nonatomic, readonly, getter = isComplexPin) BOOL complexPin;
